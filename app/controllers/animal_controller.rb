@@ -1,9 +1,7 @@
 class AnimalController < ApplicationController
 
-  def square
-    render({ :template => "game_templates/new_square_calc"})
+  def main_page
+    render({ :template => "game_templates/main_page"})
   end
   
-
-
 end
