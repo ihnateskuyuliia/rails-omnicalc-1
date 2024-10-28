@@ -27,4 +27,36 @@ class AnimalController < ApplicationController
     render({ :template => "calc_templates/root_results"})
   end 
 
+  #PAYMENT 
+  def payment_new
+    render({ :template => "calc_templates/payment_calc"})
+  end
+
+  def payment_results
+    @apr = params.fetch("user_apr").to_f
+  @r = @apr / 100 / 12
+  @years = params.fetch("user_years").to_i
+  @value = params.fetch("user_pv").to_f
+  
+  # Calculate the number of monthly periods
+  @n = @years * 12
+
+  # Organize the numerator and denominator according to the formula
+  @numerator = @r * @value
+  @denominator = 1 - (1 + @r) ** -@n
+
+  # Calculate the monthly payment (P)
+  @monthly_payment = @numerator / @denominator
+
+  #Format the Principal Value
+  @value_formatted = @value.to_fs(:currency)
+  
+  # Format the result as currency
+  @formatted_payment = @monthly_payment.to_fs(:currency)
+
+  #Format the APR
+  @apr_formatted = @apr.to_fs(:percentage, {:precision => 4})
+    render({ :template => "calc_templates/payment_results"})
+  end
+
 end
