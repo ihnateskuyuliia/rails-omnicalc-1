@@ -59,4 +59,17 @@ class AnimalController < ApplicationController
     render({ :template => "calc_templates/payment_results"})
   end
 
+  #RANDOM
+  def random_new
+    render({ :template => "calc_templates/random_calc"})
+  end
+
+  def random_results
+    @minimum = params.fetch("users_number").to_f
+    @maximum = params.fetch("users_number_two").to_f
+    
+    @result = rand(@minimum..@maximum)
+    render({ :template => "calc_templates/random_results"})
+  end
+
 end
